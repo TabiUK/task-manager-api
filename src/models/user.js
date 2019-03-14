@@ -1,4 +1,5 @@
-console.log("welcome: models/user.js")
+//console.log("welcome: models/user.js")
+"use strict";
 
 const mongoose = require('mongoose')
 const validator = require('validator')
@@ -133,4 +134,4 @@ const User = mongoose.model('User',userSchema)
 
 module.exports = User
 
-console.log("end of line:  models/user.js")
+//console.log("end of line:  models/user.js")

@@ -1,4 +1,5 @@
-console.log("welcome: models/task.js")
+//console.log("welcome: models/task.js")
+"use strict";
 
 const mongoose = require('mongoose')
 
@@ -29,7 +30,7 @@ const TaskSchema = new mongoose.Schema(
 TaskSchema.pre('save', async function (next) 
 {
     const task = this
-    console.log("task pre save")
+    //console.log("task pre save")
 
     next()
 })
@@ -38,4 +39,4 @@ const Task = mongoose.model('task', TaskSchema)
 
 module.exports = Task
 
-console.log("end of line: models/task.js")
+//console.log("end of line: models/task.js")

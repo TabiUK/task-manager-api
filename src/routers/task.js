@@ -1,4 +1,5 @@
-console.log("welcome: routers/task.js")
+//console.log("welcome: routers/task.js")
+"use strict";
 
 const express = require('express')
 
@@ -16,7 +17,7 @@ module.exports = router
 
 // setup up end point
 
-// creating new task
+// creating new task for user
 router.post('/tasks', auth, async (req, res) =>
 {
     const task = new Task(
@@ -38,6 +39,7 @@ router.post('/tasks', auth, async (req, res) =>
 // GET /tasks?limit=10&skip=0
 // GET /tasks?sortBy=createdAt:(asc/desc)
 // -1 == decending, 1 == acending
+// gets all tasks for user
 router.get('/tasks', auth, async (req, res) =>
 {
     const match = {}
@@ -69,6 +71,8 @@ router.get('/tasks', auth, async (req, res) =>
     }
 })
 
+
+// gets a task based on id for user
 router.get('/tasks/:id', auth, async (req, res) =>
 {
 
@@ -88,6 +92,8 @@ router.get('/tasks/:id', auth, async (req, res) =>
     }
 })
 
+
+// update task id for user
 router.patch('/tasks/:id', auth, async (req, res) =>
 {
     const _id = req.params.id
@@ -115,6 +121,8 @@ router.patch('/tasks/:id', auth, async (req, res) =>
     }
 })
 
+
+//delete task id for user
 router.delete('/tasks/:id', auth, async (req, res) =>
 {
     const _id = req.params.id
@@ -135,4 +143,4 @@ router.delete('/tasks/:id', auth, async (req, res) =>
 
 module.exports = router
 
-console.log("end of line: routers/task.js")
+//console.log("end of line: routers/task.js")

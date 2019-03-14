@@ -1,4 +1,5 @@
-console.log("welcome: utils.js")
+//console.log("welcome: utils.js")
+"use strict";
 
  /**
      * takes in a request.body, with an array of allowed data fields
@@ -18,4 +19,4 @@ const isValidOperation = (keyPair, allowedUpdates, errorMessage = 'invalid opera
 
 module.exports.isValidOperation = isValidOperation
 
-console.log("end of line: utils.js")
+//console.log("end of line: utils.js")

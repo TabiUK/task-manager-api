@@ -1,4 +1,5 @@
-console.log("welcome: middleware/auth.js")
+//console.log("welcome: middleware/auth.js")
+"use strict";
 
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
@@ -9,6 +10,7 @@ const auth = async (req, res, next) =>
         const token = req.header('Authorization').replace('Bearer ', '')
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
+
         if (!user) throw Error()
 
         req.token = token
@@ -22,4 +24,4 @@ const auth = async (req, res, next) =>
 
 module.exports = auth
 
-console.log("end of line: middleware/auth.js")
+//console.log("end of line: middleware/auth.js")

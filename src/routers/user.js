@@ -1,4 +1,5 @@
-console.log("welcome: routers/user.js")
+//console.log("welcome: routers/user.js")
+"use strict";
 
 const express = require('express')
 const multer = require('multer')
@@ -92,7 +93,7 @@ router.patch('/users/me', auth, async (req, res) =>
         updates.forEach((update) => req.user[update] = req.body[update])
         await req.user.save()
 
-        res.send(req.user)
+        res.status(200).send(req.user)
 
     } catch (e) {
         res.status(400).send('' + e)
@@ -105,7 +106,7 @@ router.delete('/users/me', auth, async (req, res) =>
     try {
         await req.user.remove()
         sendCancelEmail(req.user.email, req.user.name)
-        res.send(req.user)
+        res.status(200).send(req.user)
 
     } catch (e) {
         res.status(400).send('' + e)
@@ -125,7 +126,7 @@ const upload = multer({
     }
 })
 
-
+// upload avatar
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) =>
 {
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()
@@ -139,6 +140,7 @@ router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) 
     res.status(400).send( { error: error.message } )
 })
 
+// delete avatar
 router.delete('/users/me/avatar', auth, async (req, res) =>
 {
     req.user.avatar = undefined
@@ -150,7 +152,7 @@ router.delete('/users/me/avatar', auth, async (req, res) =>
     res.status(400).send( { error: error.message } )
 })
 
-
+// get avatar
 router.get('/users/:id/avatar', async (req, res) =>
 {
     try {
@@ -169,4 +171,4 @@ router.get('/users/:id/avatar', async (req, res) =>
 
 module.exports = router
 
-console.log("end of line: routers/user.js")
+//console.log("end of line: routers/user.js")

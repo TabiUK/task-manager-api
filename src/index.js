@@ -1,54 +1,41 @@
-console.log("welcome: index.js")
+//console.log("welcome: index.js")
+"use strict";
 
-const express = require('express')
-
-//connects to mongoose db
-require('./db/mongoose')
-
-// include the router end points
-const userRouter = require('./routers/user')
-const taskRouter = require('./routers/task')
-
-const app = express()
+const app = require('./app')
+const mongoose = require('./db/mongoose')
 const port = process.env.PORT
 
-// maintance mode middleware
-//app.use((req, res, next) =>
-//{
-//    res.status(503).send('server undergoing maintance')
-//});
+if (!process.env.STARTUP_MONGOOSE_DB_ASYNC) process.env.STARTUP_MONGOOSE_DB_ASYNC=YES
+if (!process.env.OUTPUT_EXPRESS_HTTP_LOG) process.env.OUTPUT_EXPRESS_HTTP_LOG=YES
 
-// auth middleware
-/*
-app.use((req, res, next) =>
-{
-    if (req.method === 'GET') {
-        res.send('GET requests are disabled')
-    } else {
-        next()
-    }
-});
-*/
+const dbconnectcallback = async (status) => {
+    
+    if (status.connected) return
 
-// logger middleware
-app.use((req, res, next) =>
-{
-    var now = new Date().toString();
-    var log = `${now}: ${req.method} ${req.url}`;
-    console.log(log);
-    next();
-});
+    if (status.status === 'connecting') return
 
-// tells express to parse json
-app.use(express.json())
-app.use(userRouter)
-app.use(taskRouter)
+    server.close(() =>
+    {
+        console.log("closed: " + status.status + " : " + status.connected)
+    })
+}
 
 console.log("start up server")
-app.listen(port, () =>
+const server = app.listen(port, () =>
 {
     console.log('server is up on port ' + port)
 })
 
+if (!server)  return
+process.env.server = server
 
-console.log("end of line: index.js")
+if (process.env.STARTUP_MONGOOSE_DB_ASYNC === 'YES') {
+
+    mongoose.connectdb(dbconnectcallback).then(() => {
+        dbconnectcallback(mongoose.IsMongooseConnected)
+    }).catch((e) => {
+        console.log('error happened: ' + e)
+    })
+}
+
+//console.log("end of line: index.js")
