@@ -6,6 +6,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 const sendWelcomeEmail = ( email, name ) => 
 {
+    return
 
     sgMail.send({
         to: email,
@@ -18,6 +19,8 @@ const sendWelcomeEmail = ( email, name ) =>
 const sendCancelEmail = ( email, name ) => 
 {
 
+    return
+    
     sgMail.send({
         to: email,
         from: 'thedimbar@gmail.com',
