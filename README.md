@@ -20,7 +20,12 @@ npm install
 
 ## RUNNING
 ```
-env-cmd ./config/dummy_dev.env node index.js
+npm run dummy
+```
+
+## TESTING
+```
+npm run dummy-test
 ```
 
 ### Heroku
