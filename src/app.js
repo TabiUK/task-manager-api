@@ -2,7 +2,7 @@
 "use strict";
 
 const express = require('express')
-
+const { LOG } = require('./env/env')
 //connects to mongoose db
 require('./db/mongoose')
 
@@ -31,7 +31,7 @@ app.use((req, res, next) =>
 */
 
 
-if (process.env.OUTPUT_EXPRESS_HTTP_LOG === 'YES') {
+if (LOG === 'YES') {
     // logger middleware
     app.use((req, res, next) => {
         var now = new Date().toString();

@@ -3,6 +3,7 @@
 
 const mongoose = require('mongoose')
 const app = require('../app')
+const { asyncDB,  mongoDBUrl } = require('../env/env')
 
 var IsMongooseConnected =
 {
@@ -54,16 +55,16 @@ const connectdb = async (callback) =>
             useFindAndModify: false
         }
 
-        if (process.env.STARTUP_MONGOOSE_DB_ASYNC === 'YES') {
-            mongoose.connect(process.env.MONGODB_URL, options)
+        if (asyncDB) {
+            mongoose.connect(mongoDBUrl, options)
         } else {
-            await mongoose.connect(process.env.MONGODB_URL, options)
+            await mongoose.connect(mongoDBUrl, options)
         }
     }
 }
 
 /*
- mongoose.connect(process.env.MONGODB_URL,
+ mongoose.connect(mongoDBUrl,
 {
     useNewUrlParser: true,
     useCreateIndex: true,

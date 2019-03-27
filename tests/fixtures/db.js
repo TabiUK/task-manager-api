@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const dbmongoose = require('../../src/db/mongoose')
 const User = require('../../src/models/user')
 const Task = require('../../src/models/task')
+const { jwt_key } = require('../../src/env/env')
 
 const userOneId = new mongoose.Types.ObjectId()
 
@@ -12,7 +13,7 @@ const userOne = {
     email: 'mike@example.com',
     password: '56what!!',
     tokens: [{
-        token: jwt.sign({ _id: userOneId}, process.env.JWT_SECRET_KEY)
+        token: jwt.sign({ _id: userOneId}, jwt_key)
     }]
 }
 
@@ -24,7 +25,7 @@ const userTwo = {
     email: 'jame@example.com',
     password: '56what!!',
     tokens: [{
-        token: jwt.sign({ _id: userTwoId}, process.env.JWT_SECRET_KEY)
+        token: jwt.sign({ _id: userTwoId}, jwt_key)
     }]
 }
 

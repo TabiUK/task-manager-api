@@ -1,12 +1,14 @@
 "use strict";
 
 const sgMail = require('@sendgrid/mail')
+const { sendOutEmails,  SENDGRID_API_KEY } = require('../env/env')
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+
+sgMail.setApiKey(SENDGRID_API_KEY)
 
 const sendWelcomeEmail = ( email, name ) => 
 {
-    return
+    if (sendOutEmails === 'NO') return
 
     sgMail.send({
         to: email,
@@ -19,7 +21,7 @@ const sendWelcomeEmail = ( email, name ) =>
 const sendCancelEmail = ( email, name ) => 
 {
 
-    return
+    if (sendOutEmails === 'NO') return
     
     sgMail.send({
         to: email,

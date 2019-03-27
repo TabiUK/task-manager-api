@@ -3,10 +3,9 @@
 
 const app = require('./app')
 const mongoose = require('./db/mongoose')
-const port = process.env.PORT
 
-if (!process.env.STARTUP_MONGOOSE_DB_ASYNC) process.env.STARTUP_MONGOOSE_DB_ASYNC=YES
-if (!process.env.OUTPUT_EXPRESS_HTTP_LOG) process.env.OUTPUT_EXPRESS_HTTP_LOG=YES
+const { asyncDB, port } = require('./env/env')
+
 
 const dbconnectcallback = async (status) => {
     
@@ -29,7 +28,7 @@ const server = app.listen(port, () =>
 if (!server)  return
 process.env.server = server
 
-if (process.env.STARTUP_MONGOOSE_DB_ASYNC === 'YES') {
+if (asyncDB === 'YES') {
 
     mongoose.connectdb(dbconnectcallback).then(() => {
         dbconnectcallback(mongoose.IsMongooseConnected)
